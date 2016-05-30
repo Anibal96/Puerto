@@ -22,15 +22,17 @@ public class Puerto
      */
     public int addAlquiler(int numeroDias, Cliente cliente, Barco barco){
         int posicion = -1;
-        for(int cont = 0;cont < NUMERO_AMARRES && posicion == -1;cont++){
+        int cont = 0;
+        while(cont < NUMERO_AMARRES && posicion == -1){
             if(alquileres[cont]== null){
                 posicion = cont;
                 alquileres[cont] = new Alquiler(numeroDias, cliente, barco);
             }
+            cont++;
         }
         return posicion;
     }
-    
+
     /**
      * Metodo que muestra los amarres que estan alquilados y los que estan vacios
      */
@@ -40,17 +42,22 @@ public class Puerto
                 System.out.println("El amarre " + (cont+1) + " esta vacio");
             else{
                 System.out.println("El amarre " + (cont+1) 
-                + " esta alquilado, el valor del alquiler es = " + alquileres[cont].getCosteAlquiler());
+                    + " esta alquilado, el valor del alquiler es = " + alquileres[cont].getCosteAlquiler());
             }
         }
     }
-    
+
     /**
      * Metodo que liquida un alquiler y devuelve su coste en float
      */
     public float liquidarAlquiler(int posicion){
-        float liquidacion = alquileres[posicion].getCosteAlquiler();
-        alquileres[posicion] = null;
-        return liquidacion;
+        float valor = -1;
+        if(posicion < NUMERO_AMARRES && posicion >= 0){
+            if(alquileres[posicion] != null){
+                valor = alquileres[posicion].getCosteAlquiler();
+                alquileres[posicion] = null;
+            }
+        }
+        return valor;
     }
 }
