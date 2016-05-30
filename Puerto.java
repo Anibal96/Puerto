@@ -21,9 +21,8 @@ public class Puerto
      * Metodo que añade un alquiler al Array devuelve la posicion o -1 en caso de que este lleno
      */
     public int addAlquiler(int numeroDias, Cliente cliente, Barco barco){
-        int cont = 0;
         int posicion = -1;
-        while(cont < NUMERO_AMARRES && posicion == -1){
+        for(int cont = 0;cont < NUMERO_AMARRES && posicion == -1;cont++){
             if(alquileres[cont]== null){
                 posicion = cont;
                 alquileres[cont] = new Alquiler(numeroDias, cliente, barco);
