@@ -264,18 +264,21 @@ public class Puerto
             break;
         }
     }
-    
+
     /**
-         * Metodo que liquida un alquiler y devuelve su coste en float
-         */
-        public float liquidarAlquiler(int posicion){
+     * Metodo que liquida un alquiler y devuelve su coste en float
+     */
+    public float liquidarAlquiler(int posicion){
         float valor = -1;
-        if(posicion < NUMERO_AMARRES && posicion >= 0){
-            if(alquileres.get(posicion) != null){
-                valor = alquileres.get(posicion).getCosteAlquiler();
-                alquileres.set(posicion, null);
+        int cont = 0;
+            while(cont < alquileres.size() && valor == -1){
+                if(alquileres.get(cont).getBarco().getAmarre() == Math.pow(2, posicion)){
+                    valor = alquileres.get(cont).getCosteAlquiler();
+                    alquileres.remove(cont);
+                    codigoAmarre -= (int)Math.pow(2, posicion);
+                }
+                cont++;
             }
-        }
         return valor;
     }
 }
