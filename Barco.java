@@ -10,6 +10,7 @@ public abstract class Barco
     private String matricula;
     private float eslora;
     private int anoFabricacion;
+    private int amarre;
     
     /**
      * Constructor for objects of class Barco
@@ -40,6 +41,20 @@ public abstract class Barco
      */
     public int getAnoFabricacion(){
         return anoFabricacion;
+    }
+    
+    /**
+     * Metodo que da un valor del amarre
+     */
+    public void amarrar(int amarre){
+        this.amarre = amarre;
+    }
+    
+    /**
+     * Metodo que devuelve el amarre
+     */
+    public int getAmarre(){
+        return amarre;
     }
     
     public abstract int getCoeficienteBernua();

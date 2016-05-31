@@ -30,6 +30,13 @@ public class Alquiler
     }
     
     /**
+     * Metodo que devuelve el barco
+     */
+    public Barco getBarco(){
+        return barco;
+    }
+    
+    /**
      * @Override toString
      */
     public String toString(){
