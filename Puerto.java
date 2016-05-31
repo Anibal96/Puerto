@@ -97,6 +97,11 @@ public class Puerto
                 alquileres.add(1, new Alquiler(numeroDias, cliente, barco1));
                 posicion = 1;
                 break;
+                case 14:
+                barco1.amarrar(1);
+                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
+                posicion = 0;
+                break;
             }
             codigoAmarre += barco1.getAmarre();
         }
