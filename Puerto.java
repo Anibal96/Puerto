@@ -26,82 +26,38 @@ public class Puerto
         int posicion = -1;
         if(alquileres.size()<NUMERO_AMARRES){
             Barco barco1 = barco;
-            switch(codigoAmarre){
-                case 0:
-                barco1.amarrar(1);
-                alquileres.add(new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
-                case 1:
-                barco1.amarrar(2);
-                alquileres.add(1, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 1;
-                break;
-                case 2:
+            if(codigoAmarre%2==0){
                 barco1.amarrar(1);
                 alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
                 posicion = 0;
-                break;
-                case 3:
-                barco1.amarrar(4);
-                alquileres.add(2, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 2;
-                break;
-                case 4:
-                barco1.amarrar(1);
-                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
-                case 5:
-                barco1.amarrar(2);
-                alquileres.add(1, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 1;
-                break;
-                case 6:
-                barco1.amarrar(1);
-                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
-                case 7:
-                barco1.amarrar(8);
-                alquileres.add(3, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 3;
-                break;
-                case 8:
-                barco1.amarrar(1);
-                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
-                case 9:
-                barco1.amarrar(2);
-                alquileres.add(1, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 1;
-                break;
-                case 10:
-                barco1.amarrar(1);
-                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
-                case 11:
-                barco1.amarrar(4);
-                alquileres.add(2, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 2;
-                break;
-                case 12:
-                barco1.amarrar(1);
-                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
-                case 13:
-                barco1.amarrar(2);
-                alquileres.add(1, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 1;
-                break;
-                case 14:
-                barco1.amarrar(1);
-                alquileres.add(0, new Alquiler(numeroDias, cliente, barco1));
-                posicion = 0;
-                break;
+            }
+            else{
+                int cont = 0;
+                boolean encontrado = false;
+                while(cont < NUMERO_AMARRES && !encontrado){
+                    if((codigoAmarre - (1+(NUMERO_AMARRES*cont)) == 0)){
+                        barco1.amarrar(2);
+                        alquileres.add(1, new Alquiler(numeroDias, cliente, barco1));
+                        posicion = 1;
+                        encontrado = true;
+                    }
+                    cont++;
+                }
+                cont = 0;
+                encontrado = false;
+                while(cont < (NUMERO_AMARRES/2) && !encontrado){
+                    if((codigoAmarre - (3 + ((NUMERO_AMARRES*2)*cont)) == 0)){
+                        barco1.amarrar(4);
+                        alquileres.add(2, new Alquiler(numeroDias, cliente, barco1));
+                        posicion = 2;
+                    }
+                    cont++;
+                }
+                if(codigoAmarre == 7){
+                    barco1.amarrar(8);
+                    alquileres.add(new Alquiler(numeroDias, cliente, barco1));
+                    posicion = 3;
+                }
             }
             codigoAmarre += barco1.getAmarre();
         }
@@ -112,161 +68,58 @@ public class Puerto
      * Metodo que muestra los amarres que estan alquilados y los que estan vacios
      */
     public void verEstadoAmarres(){
-        switch(codigoAmarre){
-            case 0:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                System.out.println("El amarre " + (cont+1) + " esta vacio");
+        int amarre = 0;
+        int i = 0;
+        if(codigoAmarre%2==0){
+            System.out.println("El amarre " + (amarre+1) + " esta vacio");
+        }
+        else{
+            System.out.println("El amarre " + (amarre+1) 
+                + " esta alquilado, el valor del alquiler es = " + alquileres.get(i).getCosteAlquiler());
+            i++;
+        }
+        amarre++;
+        int cont = 0;
+        boolean encontrado = false;
+        while(cont < NUMERO_AMARRES && !encontrado){
+            if((codigoAmarre - (1+(NUMERO_AMARRES*cont)) != 0)){
+                encontrado = true;
             }
-            break;
-            case 1:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
+            cont++;
+        }
+        if(encontrado){
+            System.out.println("El amarre " + (amarre+1) 
+                + " esta alquilado, el valor del alquiler es = " + alquileres.get(i).getCosteAlquiler());
+            i++;
+        }
+        else{
+            System.out.println("El amarre " + (amarre+1) + " esta vacio");
+        }
+        amarre++;
+        cont = 0;
+        encontrado = false;
+        while(cont < (NUMERO_AMARRES/2) && !encontrado){
+            if((codigoAmarre - (3 + ((NUMERO_AMARRES*2)*cont)) != 0)){
+                encontrado = true;
             }
-            break;
-            case 2:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 1){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 3:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0 || cont == 1){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 4:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 2){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 5:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0 || cont == 2){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 6:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 1 || cont == 2){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 7:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0 || cont == 1 || cont == 2){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 8:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 3){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 9:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0 || cont == 3){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 10:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 1 || cont == 3){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 11:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0 || cont == 1 || cont == 3){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 12:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 2 || cont == 3){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 13:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                if(cont == 0 || cont == 2 || cont == 3){
-                    System.out.println("El amarre " + (cont+1) 
-                        + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-                }
-                else{
-                    System.out.println("El amarre " + (cont+1) + " esta vacio");
-                }
-            }
-            break;
-            case 14:
-            for(int cont = 0; cont < NUMERO_AMARRES;cont++){
-                System.out.println("El amarre " + (cont+1) 
-                    + " esta alquilado, el valor del alquiler es = " + alquileres.get(cont).getCosteAlquiler());
-            }
-            break;
+            cont++;
+        }
+        if(encontrado){
+            System.out.println("El amarre " + (amarre+1) 
+                + " esta alquilado, el valor del alquiler es = " + alquileres.get(i).getCosteAlquiler());
+            i++;
+        }
+        else{
+            System.out.println("El amarre " + (amarre+1) + " esta vacio");
+        }
+        amarre++;
+        if(codigoAmarre == 8){
+            System.out.println("El amarre " + (amarre+1) 
+                + " esta alquilado, el valor del alquiler es = " + alquileres.get(i).getCosteAlquiler());
+            i++;
+        }
+        else{
+            System.out.println("El amarre " + (amarre+1) + " esta vacio");
         }
     }
 
@@ -276,14 +129,14 @@ public class Puerto
     public float liquidarAlquiler(int posicion){
         float valor = -1;
         int cont = 0;
-            while(cont < alquileres.size() && valor == -1){
-                if(alquileres.get(cont).getBarco().getAmarre() == Math.pow(2, posicion)){
-                    valor = alquileres.get(cont).getCosteAlquiler();
-                    alquileres.remove(cont);
-                    codigoAmarre -= (int)Math.pow(2, posicion);
-                }
-                cont++;
+        while(cont < alquileres.size() && valor == -1){
+            if(alquileres.get(cont).getBarco().getAmarre() == Math.pow(2, posicion)){
+                valor = alquileres.get(cont).getCosteAlquiler();
+                alquileres.remove(cont);
+                codigoAmarre -= (int)Math.pow(2, posicion);
             }
+            cont++;
+        }
         return valor;
     }
 }
